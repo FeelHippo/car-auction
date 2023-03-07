@@ -23,8 +23,8 @@ class DashboardScreen extends StatelessWidget {
                 providers: [
                   BlocProvider<CarsBloc>.value(value: carsBloc),
                 ],
-                child: DashboardWidget(),
-            )
+                child: DashboardWidget(carsBloc: carsBloc),
+            );
           },
         ),
       ),

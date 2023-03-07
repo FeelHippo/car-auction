@@ -1,7 +1,9 @@
 import 'package:injector/injector.dart';
-import 'package:dio/dio.dart';
+import 'package:carbids/data/network/cars_provider_api_client.dart';
+import 'package:carbids/domain/cars/cars_provider.dart';
+import 'package:carbids/domain/cars/cars_interactor.dart';
+import 'package:carbids/presentation/dashboard/bloc/cars_bloc.dart';
 
-import 'package:carbids/modules/app_module.dart';
 import 'package:carbids/modules/bloc_module.dart';
 import 'package:carbids/modules/data_module.dart';
 import 'package:carbids/modules/domain_module.dart';
@@ -25,10 +27,8 @@ class IOC {
   }
 
   void _initDependencies() {
-    // Common
-    _registerSingleton<Dio>(NetworkModule.createDio);
     // Cars
-    _registerSingleton<CarsApiClient>(NetworkModule.createCarsApiClient);
+    _registerSingleton<CarsProviderApiClient>(NetworkModule.createCarsApiClient);
     _registerSingleton<CarsProvider>(DataModule.createCarsProvider);
     _registerSingleton<CarsInteractor>(DomainModule.createCarsInteractor);
     _registerDependency<CarsBloc>(BlocModule.createCarsBloc);

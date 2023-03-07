@@ -28,10 +28,10 @@ class AppTheme {
         ),
       ),
       cupertinoOverrideTheme: cupertinoTheme(),
-      cardTheme: const CardTheme(
+      cardTheme: CardTheme(
         elevation: 1.0,
         color: Palette.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+        shape: RoundedRectangleBorder(borderRadius: const BorderRadius.all(Radius.circular(4))),
       ),
     );
   }

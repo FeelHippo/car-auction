@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carbids/presentation/dashboard/bloc/cars_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +49,9 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                             width: double.maxFinite,
                             child: Card(
                               elevation: 10,
-                              child: Image.memory(base64Decode(state.carModels[index].photo)),
+                              child: state.carModels?[index] != null
+                                  ? Image.memory(base64Decode(state.carModels![index].photo))
+                                  : Container()
                             ),
                           );
                         },
