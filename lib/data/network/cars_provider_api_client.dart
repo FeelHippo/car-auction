@@ -1,12 +1,12 @@
 import 'package:carbids/data/network/dto/car.dart';
 import 'package:dio/dio.dart';
 
-part 'cars_provider_api_client.g.dart'
+// part 'cars_provider_api_client.g.dart';
 
-@RestApi(baseUrl: "localhost:3000")
+// @RestApi(baseUrl: "localhost:3000")
 abstract class CarsProviderApiClient {
 
-  factory CarsProviderApiClient(Dio dio) = _CarsProviderApiClient;
+  // factory CarsProviderApiClient(Dio dio) = _CarsProviderApiClient;
 
   List<CarDto> getCars() {
     // TODO: find alternative package to Dio for this
