@@ -3,7 +3,5 @@ import 'package:dio/dio.dart';
 import 'package:injector/injector.dart';
 
 class NetworkModule {
-  static CarsProviderApiClient createCarsApiClient(Injector injector) {
-    return CarsProviderApiClient(injector.get<Dio>());
-  }
+  static CarsProviderApiClient createCarsApiClient(Injector injector) => CarsProviderApiClient(injector.get<Dio>());
 }
