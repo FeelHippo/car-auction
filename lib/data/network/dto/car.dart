@@ -27,6 +27,7 @@ class CarDto {
   );
 
   factory CarDto.fromJson(Map<String, dynamic> json) => _$CarDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$CarDtoToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -42,6 +43,7 @@ class AddressDto {
   );
 
   factory AddressDto.fromJson(Map<String, dynamic> json) => _$AddressDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$AddressDtoToJson(this);
 }
 
 enum FuelType {
