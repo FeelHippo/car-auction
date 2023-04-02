@@ -8,7 +8,6 @@ class AppTheme {
   static ThemeData androidTheme() {
     return ThemeData(
       brightness: Brightness.light,
-      accentColor: Palette.primary,
       primaryColor: Palette.primary,
       highlightColor: Palette.primary.withAlpha(Palette.opacity20),
       splashColor: Palette.primary.withAlpha(Palette.opacity20),

@@ -15,7 +15,7 @@ class ScopeWidget extends StatelessWidget {
         key: key,
         create: (context) => scope,
         dispose: (context, value) => value.dispose(),
-        child: child ?? Container()
+        child: child,
     );
   }
 }

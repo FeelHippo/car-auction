@@ -1,6 +1,7 @@
 import 'package:injector/injector.dart';
 import 'package:carbids/data/network/cars_provider_api_client.dart';
 import 'package:carbids/domain/cars/cars_provider.dart';
+import 'package:carbids/domain/cars/network_cars_provider.dart';
 import 'package:carbids/domain/cars/cars_interactor.dart';
 import 'package:carbids/presentation/dashboard/bloc/cars_bloc.dart';
 
@@ -29,12 +30,16 @@ class IOC {
   void _initDependencies() {
     // Cars
     _registerSingleton<CarsProviderApiClient>(NetworkModule.createCarsApiClient);
+    _registerDependency<CarsProviderMapper>(DataModule.createCarsProviderMapper);
     _registerSingleton<CarsProvider>(DataModule.createCarsProvider);
     _registerSingleton<CarsInteractor>(DomainModule.createCarsInteractor);
     _registerDependency<CarsBloc>(BlocModule.createCarsBloc);
   }
 
-  void _registerSingleton<T>(Builder<T> builder, {bool override = false, String dependencyName = ""}) {
+  void _registerSingleton<T>(
+      DependencyBuilder<T> builder,
+      {bool override = false, String dependencyName = ""}
+  ) {
     injector.registerSingleton<T>(() {
       final instance = builder(injector);
       if (instance is DisposableDependency) {
@@ -44,9 +49,11 @@ class IOC {
     }, override: override, dependencyName: dependencyName);
   }
 
-  // ignore: unused_element
-  void _registerDependency<T>(Builder<T> builder, {bool override = false, String dependencyName = ""}) {
-    injector.registerDependency<T>((){
+  void _registerDependency<T>(
+      DependencyBuilder<T> builder,
+      {bool override = false, String dependencyName = ""}
+  ) {
+    injector.registerDependency<T>(() {
       final instance = builder(injector);
       if (instance is DisposableDependency) {
         _disposables.add(instance);
@@ -80,7 +87,7 @@ class IOC {
   }
 }
 
-typedef Builder<T> = T Function(Injector injector);
+typedef DependencyBuilder<T> = T Function(Injector injector);
 
 // ignore: one_member_abstracts
 abstract class DisposableDependency {

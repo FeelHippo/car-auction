@@ -10,7 +10,7 @@ class CarsBloc extends Bloc<CarsEvent, CarsState> {
 
   final CarsInteractor _carsInteractor;
 
-  CarsBloc(this._carsInteractor) : super(const InitialCarsState()) {
+  CarsBloc(this._carsInteractor) : super(const CarsState()) {
     on<FetchCarsEvent>((event, emit) async {
 
       emit(const CarsState(loading: true));

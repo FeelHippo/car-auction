@@ -4,6 +4,7 @@ import 'package:carbids/data/network/cars_provider_api_client.dart';
 import 'package:injector/injector.dart';
 
 class DataModule{
+  static CarsProviderMapper createCarsProviderMapper(Injector injector) => CarsProviderMapper();
   static CarsProvider createCarsProvider(Injector injector) => NetworkClassProvider(
       injector.get<CarsProviderApiClient>(),
       injector.get<CarsProviderMapper>(),
