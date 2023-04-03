@@ -21,10 +21,3 @@ class CarsState extends Equatable {
     carModels,
   ];
 }
-
-class InitialCarsState extends CarsState {
-  const InitialCarsState();
-
-  @override
-  List<Object> get props => <Object>[];
-}
