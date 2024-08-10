@@ -4,11 +4,34 @@ abstract class CarsEvent extends Equatable {
   const CarsEvent();
 }
 
-class FetchCarsEvent extends CarsEvent {
+class FetchCarsByYearsEvent extends CarsEvent {
 
-  const FetchCarsEvent();
+  const FetchCarsByYearsEvent({
+    this.year,
+    this.make,
+    this.model,
+  });
+
+  final String? year;
+  final String? make;
+  final String? model;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => <Object?>[year, make, model];
+
+}
+
+class FetchCarsByMakesEvent extends CarsEvent {
+
+  const FetchCarsByMakesEvent({
+    this.year,
+    this.make,
+  });
+
+  final String? year;
+  final String? make;
+
+  @override
+  List<Object?> get props => <Object?>[year, make];
 
 }

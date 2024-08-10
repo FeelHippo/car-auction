@@ -12,11 +12,10 @@ class AppTheme {
       highlightColor: Palette.primary.withAlpha(Palette.opacity20),
       splashColor: Palette.primary.withAlpha(Palette.opacity20),
       fontFamily: "Lato",
-      primaryColorBrightness: Brightness.dark,
       scaffoldBackgroundColor: Palette.obsolete,
       indicatorColor: Palette.primary,
       textTheme: TextTheme(
-        button: TextStyles.button,
+        labelLarge: TextStyles.button,
       ),
       buttonTheme: ButtonThemeData(
         height: 48.0,

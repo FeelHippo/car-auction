@@ -4,51 +4,24 @@ part 'car.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class CarDto {
-  final String photo;
-  final DateTime deadline;
-  final int priceStart;
-  final int priceCurrent;
-  final int mileage;
-  final FuelType fuelType;
-  final bool isModified;
-  final int? valueModified;
-  final AddressDto address;
+  final List<CarDataDto> data;
 
-  CarDto(
-      this.photo,
-      this.deadline,
-      this.priceStart,
-      this.priceCurrent,
-      this.mileage,
-      this.fuelType,
-      this.isModified,
-      this.valueModified,
-      this.address
-  );
+  CarDto(this.data);
 
   factory CarDto.fromJson(Map<String, dynamic> json) => _$CarDtoFromJson(json);
   Map<String, dynamic> toJson() => _$CarDtoToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class AddressDto {
-  final String street;
-  final int zip;
-  final String city;
+class CarDataDto {
+  final int id;
+  final String name;
 
-  AddressDto(
-    this.street,
-    this.zip,
-    this.city,
+  CarDataDto(
+    this.id,
+    this.name,
   );
 
-  factory AddressDto.fromJson(Map<String, dynamic> json) => _$AddressDtoFromJson(json);
-  Map<String, dynamic> toJson() => _$AddressDtoToJson(this);
-}
-
-enum FuelType {
-  gasoline,
-  diesel,
-  hybrid,
-  electric,
+  factory CarDataDto.fromJson(Map<String, dynamic> json) => _$CarDataDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$CarDataDtoToJson(this);
 }

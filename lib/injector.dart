@@ -1,7 +1,9 @@
+import 'package:carbids/domain/cars/cars_mapper.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
-import 'package:carbids/data/network/cars_provider_api_client.dart';
+import 'package:carbids/data/network/api/cars_provider_api_client.dart';
 import 'package:carbids/domain/cars/cars_provider.dart';
-import 'package:carbids/domain/cars/network_cars_provider.dart';
 import 'package:carbids/domain/cars/cars_interactor.dart';
 import 'package:carbids/presentation/dashboard/bloc/cars_bloc.dart';
 
@@ -10,78 +12,104 @@ import 'package:carbids/modules/data_module.dart';
 import 'package:carbids/modules/domain_module.dart';
 import 'package:carbids/modules/network_module.dart';
 
+/// Inversion of Control
 class IOC {
-  final Injector injector = Injector();
-  final List<DisposableDependency> _disposables = [];
-  final IOC? parent;
-
+  /// init all app dependencies
   IOC.appScope() : parent = null {
     _initDependencies();
   }
 
-  IOC.appScopeTest(
-      {void Function(Injector injector)? builder}
-  ) : parent = null {
+  /// same as appScope, for testing purposes
+  IOC.appScopeTest({
+    void Function(Injector injector)? builder,
+  }) : parent = null {
     if (builder != null) {
       builder(injector);
     }
   }
 
+  /// assembler, injects services to the application
+  final Injector injector = Injector();
+  final List<DisposableDependency> _disposables = <DisposableDependency>[];
+
+  /// parent object passing in a child object's dependencies
+  /// in addition to controlling execution flow
+  final IOC? parent;
+
   void _initDependencies() {
-    // Cars
+    // API Clients
+    _registerSingleton<Dio>(NetworkModule.createDio);
     _registerSingleton<CarsProviderApiClient>(NetworkModule.createCarsApiClient);
-    _registerDependency<CarsProviderMapper>(DataModule.createCarsProviderMapper);
+    // Data providers
+    _registerDependency<CarsMapper>(DataModule.createCarsMapper);
     _registerSingleton<CarsProvider>(DataModule.createCarsProvider);
+    // Interactors
     _registerSingleton<CarsInteractor>(DomainModule.createCarsInteractor);
+    // Blocs
     _registerDependency<CarsBloc>(BlocModule.createCarsBloc);
   }
 
   void _registerSingleton<T>(
-      DependencyBuilder<T> builder,
-      {bool override = false, String dependencyName = ""}
-  ) {
-    injector.registerSingleton<T>(() {
-      final instance = builder(injector);
-      if (instance is DisposableDependency) {
-        _disposables.add(instance);
-      }
-      return instance;
-    }, override: override, dependencyName: dependencyName);
+      DependencyBuilder<T> builder, {
+        bool override = false,
+        String dependencyName = '',
+      }) {
+    injector.registerSingleton<T>(
+          () {
+        final T instance = builder(injector);
+        if (instance is DisposableDependency) {
+          _disposables.add(instance);
+        }
+        return instance;
+      },
+      override: override,
+      dependencyName: dependencyName,
+    );
   }
 
   void _registerDependency<T>(
-      DependencyBuilder<T> builder,
-      {bool override = false, String dependencyName = ""}
-  ) {
-    injector.registerDependency<T>(() {
-      final instance = builder(injector);
-      if (instance is DisposableDependency) {
-        _disposables.add(instance);
-      }
-      return instance;
-    }, override: override, dependencyName: dependencyName);
+      DependencyBuilder<T> builder, {
+        bool override = false,
+        String dependencyName = '',
+      }) {
+    injector.registerDependency<T>(
+          () {
+        final T instance = builder(injector);
+        if (instance is DisposableDependency) {
+          _disposables.add(instance);
+        }
+        return instance;
+      },
+      override: override,
+      dependencyName: dependencyName,
+    );
   }
 
-  T getDependency<T>({String dependencyName = ""}) {
+  /// return instance of dependency object
+  T getDependency<T>({String dependencyName = ''}) {
     try {
       if (exists<T>()) {
         return injector.get<T>(dependencyName: dependencyName);
-      } else if (parent?.exists() ?? false) {
+      } else if (parent?.exists<T>() ?? false) {
         return parent!.getDependency<T>(dependencyName: dependencyName);
       } else {
-        throw 'Type not defined ${T.toString()}';
+        debugPrint('Type not defined $T');
+        throw Error();
       }
     } catch (e) {
-      throw 'Type not defined ${T.toString()}';
+      debugPrint('Type not defined $T');
+      rethrow;
     }
   }
 
-  bool exists<T>({String dependencyName = ""}) {
+  /// returns True if instance of dependency exists
+  bool exists<T>({String dependencyName = ''}) {
     return injector.exists<T>(dependencyName: dependencyName);
   }
 
+  /// dispose of a dependency
   void dispose() {
-    for (final disposable in _disposables) {
+    for (final DisposableDependency disposable in _disposables) {
       disposable.dispose();
     }
   }

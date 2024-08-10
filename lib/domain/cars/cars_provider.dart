@@ -1,5 +1,13 @@
-import 'package:carbids/domain/cars/car_model.dart';
+import 'package:carbids/domain/cars/cars_model.dart';
 
 abstract class CarsProvider {
-  Future<List<CarModel>?> getCars();
+  Future<List<int>> getYears(
+    String? year,
+    String? make,
+    String? model,
+  );
+  Future<List<CarsModel>> getMakes(
+    String? year,
+    String? make,
+  );
 }

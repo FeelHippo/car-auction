@@ -3,32 +3,32 @@ description: Practice makes perfect.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: '>=3.2.0-0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  injector: ^2.0.0
-  provider: ^6.0.5
-  bloc: ^8.1.1
-  flutter_bloc: ^8.1.2
+  cupertino_icons: ^1.0.8
+  injector: ^3.0.0
+  provider: ^6.1.2
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.6
   equatable: ^2.0.5
-  dio: ^4.0.6
-  json_annotation: ^4.5.0
-  http: ^0.13.5
-  retrofit: ^3.3.1
-  retrofit_generator: ^4.1.1
-  analyzer: ^5.7.1
+  dio: ^5.5.0+1
+  json_annotation: ^4.9.0
+  http: ^1.2.2
+  retrofit: ^4.1.0
+  retrofit_generator: ^8.1.2
+  analyzer: ^6.7.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.0
-  json_serializable: ^6.6.1
-  build_runner: ^2.3.3
+  flutter_lints: ^4.0.0
+  json_serializable: ^6.8.0
+  build_runner: ^2.4.12
 
 flutter:
 

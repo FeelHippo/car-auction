@@ -7,45 +7,22 @@ part of 'car.dart';
 // **************************************************************************
 
 CarDto _$CarDtoFromJson(Map<String, dynamic> json) => CarDto(
-      json['photo'] as String,
-      DateTime.parse(json['deadline'] as String),
-      json['priceStart'] as int,
-      json['priceCurrent'] as int,
-      json['mileage'] as int,
-      $enumDecode(_$FuelTypeEnumMap, json['fuelType']),
-      json['isModified'] as bool,
-      json['valueModified'] as int?,
-      AddressDto.fromJson(json['address'] as Map<String, dynamic>),
+      (json['data'] as List<dynamic>)
+          .map((e) => CarDataDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$CarDtoToJson(CarDto instance) => <String, dynamic>{
-      'photo': instance.photo,
-      'deadline': instance.deadline.toIso8601String(),
-      'priceStart': instance.priceStart,
-      'priceCurrent': instance.priceCurrent,
-      'mileage': instance.mileage,
-      'fuelType': _$FuelTypeEnumMap[instance.fuelType]!,
-      'isModified': instance.isModified,
-      'valueModified': instance.valueModified,
-      'address': instance.address.toJson(),
+      'data': instance.data.map((e) => e.toJson()).toList(),
     };
 
-const _$FuelTypeEnumMap = {
-  FuelType.gasoline: 'gasoline',
-  FuelType.diesel: 'diesel',
-  FuelType.hybrid: 'hybrid',
-  FuelType.electric: 'electric',
-};
-
-AddressDto _$AddressDtoFromJson(Map<String, dynamic> json) => AddressDto(
-      json['street'] as String,
-      json['zip'] as int,
-      json['city'] as String,
+CarDataDto _$CarDataDtoFromJson(Map<String, dynamic> json) => CarDataDto(
+      (json['id'] as num).toInt(),
+      json['name'] as String,
     );
 
-Map<String, dynamic> _$AddressDtoToJson(AddressDto instance) =>
+Map<String, dynamic> _$CarDataDtoToJson(CarDataDto instance) =>
     <String, dynamic>{
-      'street': instance.street,
-      'zip': instance.zip,
-      'city': instance.city,
+      'id': instance.id,
+      'name': instance.name,
     };

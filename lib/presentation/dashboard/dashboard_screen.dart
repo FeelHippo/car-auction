@@ -4,22 +4,28 @@ import 'package:provider/provider.dart';
 import 'package:carbids/injector.dart';
 import 'package:carbids/presentation/dashboard/bloc/cars_bloc.dart';
 import 'package:carbids/presentation/dashboard/widgets/dashboard_widget.dart';
+import 'package:provider/single_child_widget.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Consumes IOC Provider: all injected dependencies are available
     return Consumer<IOC>(
-      builder: (context, ioc, child) {
+      builder: (BuildContext context, IOC ioc, Widget? child) {
+        // Merges multiple BlocProvider widgets into one widget tree
         return MultiBlocProvider(
-          providers: [
-            BlocProvider<CarsBloc>(
-                create: (_) => ioc.getDependency<CarsBloc>()
-                  ..add(const FetchCarsEvent()),
+          // Instantiate all relevant blocs here
+          providers: <SingleChildWidget>[
+            BlocProvider(
+              create: (BuildContext context) {
+                return ioc.getDependency<CarsBloc>();
+              },
             ),
+            // ... more can be added here
           ],
-          child: const DashboardWidget(),
+          child: DashboardWidget(),
         );
       },
     );
